@@ -2,9 +2,9 @@
   "name": "punjokes",
   "version": "1.0.0",
   "description": "A pun jokes api, that shows one pun joke each day",
-  "main": "index.js",
+  "main": "app/index.js",
   "scripts": {
-    "serve": "nodemon index.js",
+    "serve": "nodemon app/index.js",
     "test": "npm run test"
   },
   "keywords": [
