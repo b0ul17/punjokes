@@ -3,7 +3,7 @@ const fs = require("fs");
 const rateLimit = require("express-rate-limit");
 
 const app = express();
-const port = 4000;
+const port = 3000;
 
 const apiLimiter = rateLimit({
   windowMs: 60 * 1000, // 1 minute
