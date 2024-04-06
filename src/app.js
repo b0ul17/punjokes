@@ -1,34 +1,24 @@
-const express = require("express");
-const cron = require("node-cron");
-const fs = require("fs");
-const rateLimit = require("express-rate-limit");
-
-require("dotenv").config();
+import express from 'express';
+import {createClient} from '@supabase/supabase-js';
+import cron from "node-cron";
+import rateLimit from "express-rate-limit";
+import dotenv from "dotenv";
+dotenv.config();
 
 const app = express();
 
 let dailyJoke = null;
 
-let jokes = [];
+const supabaseUrl = process.env.SUPABASE_URL
+const supabaseKey =  process.env.SUPABASE_KEY
+const supabase = createClient(supabaseUrl, supabaseKey)
 
-// Read jokes from JSON file
-function readJokesFromFile() {
-  try {
-    const jsonData = require("./punjokes.json");
-    jokes = jsonData.jokes;
-  } catch (err) {
-    console.error("Error reading jokes file:", err);
-  }
-}
 
-// Get a random joke
-function getRandomJoke() {
-  const index = Math.floor(Math.random() * jokes.length);
-  return jokes[index];
-}
 
-function setDailyJoke() {
-  dailyJoke = getRandomJoke();
+async function fetchRandomJoke(){
+  let { data } = await supabase.rpc('get_random_joke');
+  dailyJoke = data[0];
+
 }
 
 // Rate limiter middleware
@@ -43,15 +33,14 @@ app.use(limiter);
 // Endpoint to get today's joke
 app.get("/", (req, res) => {
   if (!dailyJoke) {
-    // If dailyJoke is not set, set it to a new joke
-    setDailyJoke();
+    // If dailyJoke is not set, fetch joke
+    fetchRandomJoke();
   }
-  res.json({ joke: dailyJoke });
+  res.json(dailyJoke );
 });
 
 // Schedule a job to get a new joke every day at 12:00 AM
-cron.schedule("0 0 * * *", setDailyJoke);
+cron.schedule("0 0 * * *", fetchRandomJoke);
 
-readJokesFromFile();
 
-module.exports = app;
+export default app;

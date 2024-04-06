@@ -3,10 +3,12 @@
   "version": "1.0.0",
   "description": "A pun jokes api, that shows one pun joke each day",
   "main": "src/index.js",
+  "type": "module",
   "scripts": {
     "serve": "nodemon src/index.js",
     "test": "npm run test"
   },
+
   "keywords": [
     "pun",
     "jokes"
@@ -14,6 +16,7 @@
   "author": "b0ul17",
   "license": "MIT",
   "dependencies": {
+    "@supabase/supabase-js": "^2.41.1",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "express-rate-limit": "^6.7.0",
