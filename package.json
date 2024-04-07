@@ -1,6 +1,6 @@
 {
   "name": "punjokes",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "A pun jokes api, that shows one pun joke each day",
   "main": "src/index.ts",
   "scripts": {
