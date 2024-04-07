@@ -1,4 +1,4 @@
-import express from 'express';
+import express, {Request, Response} from 'express';
 import {createClient} from '@supabase/supabase-js';
 import cron from "node-cron";
 import rateLimit from "express-rate-limit";
@@ -7,10 +7,10 @@ dotenv.config();
 
 const app = express();
 
-let dailyJoke = null;
+let dailyJoke :object | null = null;
 
-const supabaseUrl = process.env.SUPABASE_URL
-const supabaseKey =  process.env.SUPABASE_KEY
+const supabaseUrl = process.env.SUPABASE_URL ?? '';
+const supabaseKey =  process.env.SUPABASE_KEY ?? ''
 const supabase = createClient(supabaseUrl, supabaseKey)
 
 
@@ -31,7 +31,7 @@ const limiter = rateLimit({
 app.use(limiter);
 
 // Endpoint to get today's joke
-app.get("/", (req, res) => {
+app.get("/", (req: Request, res: Response) => {
   if (!dailyJoke) {
     // If dailyJoke is not set, fetch joke
     fetchRandomJoke();
