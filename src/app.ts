@@ -42,5 +42,6 @@ app.get("/", (req: Request, res: Response) => {
 // Schedule a job to get a new joke every day at 12:00 AM
 cron.schedule("0 0 * * *", fetchRandomJoke);
 
+fetchRandomJoke();
 
 export default app;
