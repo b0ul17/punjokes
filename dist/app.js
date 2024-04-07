@@ -47,5 +47,6 @@ app.get("/", (req, res) => {
 });
 // Schedule a job to get a new joke every day at 12:00 AM
 node_cron_1.default.schedule("0 0 * * *", fetchRandomJoke);
+fetchRandomJoke();
 exports.default = app;
 //# sourceMappingURL=app.js.map
