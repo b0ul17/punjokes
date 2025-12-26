@@ -1,30 +1,13 @@
 const express = require("express");
 const cron = require("node-cron");
 const rateLimit = require("express-rate-limit");
+const { getRandomJoke } = require("./db");
 
 require("dotenv").config();
 
 const app = express();
 
 let dailyJoke = null;
-
-let jokes = [];
-
-// Read jokes from JSON file
-function readJokesFromFile() {
-  try {
-    const jsonData = require("./punjokes.json");
-    jokes = jsonData.jokes;
-  } catch (err) {
-    console.error("Error reading jokes file:", err);
-  }
-}
-
-// Get a random joke
-function getRandomJoke() {
-  const index = Math.floor(Math.random() * jokes.length);
-  return jokes[index];
-}
 
 function setDailyJoke() {
   dailyJoke = getRandomJoke();
@@ -50,7 +33,5 @@ app.get("/", (req, res) => {
 
 // Schedule a job to get a new joke every day at 12:00 AM
 cron.schedule("0 0 * * *", setDailyJoke);
-
-readJokesFromFile();
 
 module.exports = app;
