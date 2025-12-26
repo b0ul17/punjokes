@@ -1,6 +1,7 @@
 {
   "name": "punjokes",
   "version": "1.0.0",
+  "type": "module",
   "description": "A pun jokes api, that shows one pun joke each day",
   "main": "src/index.js",
   "scripts": {
