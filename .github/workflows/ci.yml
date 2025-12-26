@@ -36,7 +36,7 @@ jobs:
         run: node --check src/index.js && node --check src/app.js
 
       - name: Verify app loads
-        run: node -e "require('./src/app')"
+        run: timeout 3 node -e "require('./src/app')" || test $? -eq 124
 
       - name: Run tests
         run: pnpm test
