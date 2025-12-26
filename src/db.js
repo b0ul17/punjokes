@@ -1,4 +1,11 @@
-import jokes from "./jokes.json" with { type: "json" };
+import { readFileSync } from "fs";
+import { fileURLToPath } from "url";
+import { dirname, join } from "path";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+const jokes = JSON.parse(readFileSync(join(__dirname, "jokes.json"), "utf-8"));
 
 function getAllJokes() {
   return jokes;
