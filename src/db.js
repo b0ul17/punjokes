@@ -1,6 +1,10 @@
-const Database = require("better-sqlite3");
-const crypto = require("crypto");
-const path = require("path");
+import Database from "better-sqlite3";
+import crypto from "crypto";
+import path from "path";
+import { fileURLToPath } from "url";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const dbPath = path.join(__dirname, "punjokes.db");
 const db = new Database(dbPath);
@@ -31,9 +35,4 @@ function getJokeCount() {
   return db.prepare("SELECT COUNT(*) as count FROM jokes").get().count;
 }
 
-module.exports = {
-  db,
-  getAllJokes,
-  getRandomJoke,
-  getJokeCount,
-};
+export { db, getAllJokes, getRandomJoke, getJokeCount };
