@@ -1,9 +1,8 @@
-const express = require("express");
-const cron = require("node-cron");
-const rateLimit = require("express-rate-limit");
-const { getRandomJoke } = require("./db");
-
-require("dotenv").config();
+import express from "express";
+import cron from "node-cron";
+import rateLimit from "express-rate-limit";
+import { getRandomJoke } from "./db.js";
+import "dotenv/config";
 
 const app = express();
 
@@ -34,4 +33,4 @@ app.get("/", (req, res) => {
 // Schedule a job to get a new joke every day at 12:00 AM
 cron.schedule("0 0 * * *", setDailyJoke);
 
-module.exports = app;
+export default app;

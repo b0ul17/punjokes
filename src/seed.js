@@ -1,5 +1,5 @@
-const crypto = require("crypto");
-const { db } = require("./db");
+import crypto from "crypto";
+import { db } from "./db.js";
 
 const jokes = [
   {
