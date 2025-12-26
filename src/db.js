@@ -1,38 +1,15 @@
-import Database from "better-sqlite3";
-import crypto from "crypto";
-import path from "path";
-import { fileURLToPath } from "url";
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
-const dbPath = path.join(__dirname, "punjokes.db");
-const db = new Database(dbPath);
-
-db.pragma("journal_mode = WAL");
-
-db.exec(`
-  CREATE TABLE IF NOT EXISTS jokes (
-    id TEXT PRIMARY KEY,
-    setup TEXT NOT NULL,
-    punchline TEXT NOT NULL
-  )
-`);
-
-function generateUUID() {
-  return crypto.randomUUID();
-}
+import jokes from "./jokes.json" with { type: "json" };
 
 function getAllJokes() {
-  return db.prepare("SELECT * FROM jokes").all();
+  return jokes;
 }
 
 function getRandomJoke() {
-  return db.prepare("SELECT * FROM jokes ORDER BY RANDOM() LIMIT 1").get();
+  return jokes[Math.floor(Math.random() * jokes.length)];
 }
 
 function getJokeCount() {
-  return db.prepare("SELECT COUNT(*) as count FROM jokes").get().count;
+  return jokes.length;
 }
 
-export { db, getAllJokes, getRandomJoke, getJokeCount };
+export { getAllJokes, getRandomJoke, getJokeCount };
